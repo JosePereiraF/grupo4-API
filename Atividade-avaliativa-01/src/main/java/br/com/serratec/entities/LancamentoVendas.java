@@ -19,7 +19,7 @@ public class LancamentoVendas {
 	//Relacionamento: Um vendedor possui um ou vários lançamento de vendas.
 	@ManyToOne
 	@JoinColumn(name = "id_vendedor")
-	private Vendedor vendenddor;
+	private Vendedor vendedor;
 	
 	
 	
@@ -28,7 +28,7 @@ public class LancamentoVendas {
 		this.codigoVenda = codigoVenda;
 		this.dataVenda = dataVenda;
 		this.valorVenda = valorVenda;
-		this.vendenddor = vendenddor;
+		this.vendedor = vendenddor;
 	}
 	public LancamentoVendas() {
 		super();
@@ -53,10 +53,10 @@ public class LancamentoVendas {
 		this.valorVenda = valorVenda;
 	}
 	public Vendedor getVendenddor() {
-		return vendenddor;
+		return vendedor;
 	}
 	public void setVendenddor(Vendedor vendenddor) {
-		this.vendenddor = vendenddor;
+		this.vendedor = vendenddor;
 	}
 	
 	

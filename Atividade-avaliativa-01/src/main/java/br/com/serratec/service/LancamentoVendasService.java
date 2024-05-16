@@ -19,7 +19,7 @@ public class LancamentoVendasService {
 		return repository.findAll();
 	}
 	
-	public LancamentoVendas getById(Long id) {
+	public LancamentoVendas getVendaById(Long id) {
 		Optional<LancamentoVendas> venda =  repository.findById(id);
 		if(venda.isPresent()) {
 			return venda.get();
