@@ -2,6 +2,8 @@ package br.com.serratec.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.serratec.annotation.SalarioMinimo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,7 @@ public class Vendedor {
 	private Double comissao;
 	
 	//Relacionamento: Um vendedor possui um ou vários lançamento de vendas.
+	@JsonManagedReference
 	@OneToMany(mappedBy = "vendedor")
 	private List<LancamentoVendas> listaVendas;
 	

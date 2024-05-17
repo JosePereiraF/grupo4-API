@@ -40,7 +40,7 @@ public class LancamentoVendasController {
 	@PostMapping
 	public ResponseEntity<LancamentoVendas> saveVenda(@Valid @RequestBody LancamentoVendas venda){
 		
-		if(venda.getVendedor() != null) throw new VendedorNotFoundException("O vendedor não foi localizado");
+		//if(venda.getVendedor() != null) throw new VendedorNotFoundException("O vendedor não foi localizado");
 		return ResponseEntity.created(null).body(service.saveVenda(venda));
 	}
 	

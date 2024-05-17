@@ -2,6 +2,8 @@ package br.com.serratec.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class LancamentoVendas {
 	@NotNull
 	private Double valorVenda;
 	//Relacionamento: Um vendedor possui um ou vários lançamento de vendas.
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_vendedor")
 	@NotNull
