@@ -1,9 +1,9 @@
 package br.com.serratec.repository;
 
+import br.com.serratec.entities.LancamentoVendas;
+import br.com.serratec.entities.Vendedor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.serratec.entities.LancamentoVendas;
-
-public interface LancamentoVendasRepository extends JpaRepository<LancamentoVendas, Long>{
+public interface VendedorRepository extends JpaRepository<Vendedor, Long>{
 
 }

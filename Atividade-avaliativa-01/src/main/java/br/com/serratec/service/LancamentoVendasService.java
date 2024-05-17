@@ -1,5 +1,6 @@
 package br.com.serratec.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,27 +25,31 @@ public class LancamentoVendasService {
 		return repository.findAll().stream()
 				.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
 				.collect(Collectors.toList());
-		
-		
 	}
-	/*
-	  return repository.findAll().stream()
-        .map(u -> new UsuarioResponseDTO(u.getId(), u.getNome(), u.getEmail()))
-        .collect(Collectors.toList());
-	 * */
 	
 	public Set<LancamentoVendasMostrarDTO> getVendaById(Long id) {
 		LancamentoVendas venda =  repository.findById(id).orElse(null);
 		if(venda == null) {
-			return repository.findAll().stream()
-					.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
-					.collect(Collectors.toSet());
-			
-		}else {
-			
 			return null;
+		}else {
+			Set<LancamentoVendasMostrarDTO> result = new HashSet<>();
+			result.add(new LancamentoVendasMostrarDTO(venda.getDataVenda(),venda.getValorVenda(),venda.getVendedor().getNome()));
+			return result;
 		}
 	}
+	
+//	public Set<LancamentoVendasMostrarDTO> getVendaById(Long id) {
+//		LancamentoVendas venda =  repository.findById(id).orElse(null);
+//		if(venda == null) {
+//			return repository.findAll().stream()
+//					.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
+//					.collect(Collectors.toSet());
+//
+//		}else {
+//
+//			return null;
+//		}
+//	}
 	
 	public LancamentoVendas saveVenda(LancamentoVendas venda) {
 		return repository.save(venda);

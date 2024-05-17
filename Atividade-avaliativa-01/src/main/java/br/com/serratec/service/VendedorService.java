@@ -1,68 +1,60 @@
 package br.com.serratec.service;
 
+import br.com.serratec.dtos.VendedorDTO;
+import br.com.serratec.dtos.VendedorDTO;
+import br.com.serratec.entities.Vendedor;
+import br.com.serratec.entities.Vendedor;
+import br.com.serratec.exceptions.ResourceNotFoundException;
+import br.com.serratec.repository.VendedorRepository;
+import br.com.serratec.repository.VendedorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import br.com.serratec.dtos.LancamentoVendasMostrarDTO;
-import br.com.serratec.entities.LancamentoVendas;
-import br.com.serratec.exceptions.ResourceNotFoundException;
-import br.com.serratec.repository.LancamentoVendasRepository;
-
 @Service
-public class LancamentoVendasService {
+public class VendedorService {
 	
 	@Autowired
-	private LancamentoVendasRepository repository;
+	private VendedorRepository repository;
 	
-	public List<LancamentoVendasMostrarDTO> getAllVendas(){
-		//LocalDate dataVenda, Double valorVenda, String nomeVendedo
-//		return repository.findAll();
+	public List<VendedorDTO> getAllVendedores(){
 		return repository.findAll().stream()
-				.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
+				.map(vend -> new VendedorDTO(vend.getNome(),vend.getEmail(),vend.getSalario(),vend.getComissao()))
 				.collect(Collectors.toList());
-		
-		
 	}
-	/*
-	  return repository.findAll().stream()
-        .map(u -> new UsuarioResponseDTO(u.getId(), u.getNome(), u.getEmail()))
-        .collect(Collectors.toList());
-	 * */
 	
-	public Set<LancamentoVendasMostrarDTO> getVendaById(Long id) {
-		LancamentoVendas venda =  repository.findById(id).orElse(null);
-		if(venda == null) {
-			return repository.findAll().stream()
-					.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
-					.collect(Collectors.toSet());
-			
-		}else {
-			
+	public Set<VendedorDTO> getVendedorById(Long id) {
+		Vendedor vendedor =  repository.findById(id).orElse(null);
+		if(vendedor == null) {
 			return null;
+		}else {
+			Set<VendedorDTO> result = new HashSet<>();
+			result.add(new VendedorDTO(vendedor.getNome(), vendedor.getEmail(), vendedor.getSalario(), vendedor.getComissao()));
+			return result;
 		}
 	}
 	
-	public LancamentoVendas saveVenda(LancamentoVendas venda) {
-		return repository.save(venda);
+	public Vendedor saveVendedor(Vendedor vendedor) {
+		return repository.save(vendedor);
 	}
-	public List<LancamentoVendas> saveAll(List<LancamentoVendas> vendas){
-		return repository.saveAll(vendas);
+	public List<Vendedor> saveAll(List<Vendedor> vendedor){
+		return repository.saveAll(vendedor);
 	}
 	
-	public LancamentoVendas updateVenda(Long id, LancamentoVendas venda) {
+	public Vendedor updateVendedor(Long id, Vendedor vendedor) {
 		if(repository.existsById(id)) {
-			venda.setCodigoVenda(id);
-			return repository.save(venda);
+			vendedor.setId(id);
+			return repository.save(vendedor);
 		}else {
 			return null;
 		}
 	}
-	public void deleteVenda(Long id) {
-		LancamentoVendas vendas = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
+	public void deleteVendedor(Long id) {
+		Vendedor vendedor = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Vendedor não encontrado"));
 		repository.deleteById(id);
 	}
 	
