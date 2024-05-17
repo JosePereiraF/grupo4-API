@@ -3,6 +3,7 @@ package br.com.serratec.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.serratec.entities.LancamentoVendas;
 import br.com.serratec.service.LancamentoVendasService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/vendas")
@@ -46,11 +48,23 @@ public class LancamentoVendasController {
 		}
 	}
 	@PostMapping
-	public ResponseEntity<LancamentoVendas> saveVenda(@RequestBody LancamentoVendas venda){
+	public ResponseEntity<LancamentoVendas> saveVenda(@Valid @RequestBody LancamentoVendas venda){
 		return ResponseEntity.created(null).body(service.saveVenda(venda));
 	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<List<LancamentoVendas>> saveAll(@Valid @RequestBody List<LancamentoVendas> vendas){
+		vendas = service.saveAll(vendas);
+		if(vendas == null) {
+			return ResponseEntity.notFound().build();
+		}else {
+			return ResponseEntity.ok(vendas);
+			
+		}
+	}
+	
 	@PutMapping("/{id}")
-	public ResponseEntity<LancamentoVendas> updateVenda(@PathVariable Long id, @RequestBody LancamentoVendas venda){
+	public ResponseEntity<LancamentoVendas> updateVenda(@PathVariable Long id,@Valid @RequestBody LancamentoVendas venda){
 		venda = service.updateVenda(id, venda);
 		if(venda != null) {
 			return ResponseEntity.ok(venda);

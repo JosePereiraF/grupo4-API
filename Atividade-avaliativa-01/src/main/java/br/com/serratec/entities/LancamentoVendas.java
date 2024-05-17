@@ -8,13 +8,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class LancamentoVendas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigoVenda;
+	@NotNull
 	private LocalDate dataVenda;
+	@NotNull
 	private Double valorVenda;
 	//Relacionamento: Um vendedor possui um ou vários lançamento de vendas.
 	@ManyToOne

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import br.com.serratec.annotation.SalarioMinimo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Vendedor {
@@ -21,7 +23,9 @@ public class Vendedor {
 	private String nome;
 	@Email
 	private String email;
+	@SalarioMinimo(valorSalario = 1320)
 	private Double salario;
+	@Positive
 	private Double comissao;
 	
 	//Relacionamento: Um vendedor possui um ou vários lançamento de vendas.

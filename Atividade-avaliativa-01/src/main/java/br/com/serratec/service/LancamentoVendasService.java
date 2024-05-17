@@ -32,6 +32,9 @@ public class LancamentoVendasService {
 	public LancamentoVendas saveVenda(LancamentoVendas venda) {
 		return repository.save(venda);
 	}
+	public List<LancamentoVendas> saveAll(List<LancamentoVendas> vendas){
+		return repository.saveAll(vendas);
+	}
 	
 	public LancamentoVendas updateVenda(Long id, LancamentoVendas venda) {
 		if(repository.existsById(id)) {
