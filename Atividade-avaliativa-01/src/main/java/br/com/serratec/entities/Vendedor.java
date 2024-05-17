@@ -2,8 +2,6 @@ package br.com.serratec.entities;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import br.com.serratec.annotation.SalarioMinimo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +21,7 @@ public class Vendedor {
 	private String nome;
 	@Email
 	private String email;
+	//@DecimalMin(value = 1320)
 	@SalarioMinimo(valorSalario = 1320)
 	private Double salario;
 	@Positive

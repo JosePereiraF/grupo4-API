@@ -1,9 +1,9 @@
 package br.com.serratec.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.serratec.dtos.LancamentoVendasMostrarDTO;
 import br.com.serratec.entities.LancamentoVendas;
 import br.com.serratec.service.LancamentoVendasService;
 import jakarta.validation.Valid;
@@ -21,25 +22,18 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/vendas")
 public class LancamentoVendasController {
-	/*
-	Criar a classe LancamentoService com os seguintes métodos:
-	listarPorPagina getAllVendas -> totoal vendas
-	listarPorId getById
-	inserirLancamento saveVenda
-	alterar updateVenda
-	deletar deleteVenda
-	*/
+
 	@Autowired
 	private LancamentoVendasService service;
 	
 	@GetMapping
-	public ResponseEntity<List<LancamentoVendas>> getAllVendas(){
+	public ResponseEntity<List<LancamentoVendasMostrarDTO>> getAllVendas(){
 		return ResponseEntity.ok(service.getAllVendas());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<LancamentoVendas> getVendaById(@PathVariable Long id){
-		LancamentoVendas venda = service.getVendaById(id);
+	public ResponseEntity<Set<LancamentoVendasMostrarDTO>> getVendaById(@PathVariable Long id){
+		Set<LancamentoVendasMostrarDTO> venda = service.getVendaById(id);
 		if(venda != null) {
 			return ResponseEntity.ok(venda);
 		}else {
@@ -74,12 +68,8 @@ public class LancamentoVendasController {
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletevenda(@PathVariable Long id){
-		
-		if(service.deleteVenda(id) != null) {
-			return ResponseEntity.noContent().build();
-		}else {
-			return ResponseEntity.badRequest().build();
-		}
+		service.deleteVenda(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 }

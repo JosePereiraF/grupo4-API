@@ -1,12 +1,15 @@
 package br.com.serratec.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.serratec.dtos.LancamentoVendasMostrarDTO;
 import br.com.serratec.entities.LancamentoVendas;
+import br.com.serratec.exceptions.ResourceNotFoundException;
 import br.com.serratec.repository.LancamentoVendasRepository;
 
 @Service
@@ -15,14 +18,28 @@ public class LancamentoVendasService {
 	@Autowired
 	private LancamentoVendasRepository repository;
 	
-	public List<LancamentoVendas> getAllVendas(){
-		return repository.findAll();
+	public List<LancamentoVendasMostrarDTO> getAllVendas(){
+		//LocalDate dataVenda, Double valorVenda, String nomeVendedo
+//		return repository.findAll();
+		return repository.findAll().stream()
+				.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
+				.collect(Collectors.toList());
+		
+		
 	}
+	/*
+	  return repository.findAll().stream()
+        .map(u -> new UsuarioResponseDTO(u.getId(), u.getNome(), u.getEmail()))
+        .collect(Collectors.toList());
+	 * */
 	
-	public LancamentoVendas getVendaById(Long id) {
-		Optional<LancamentoVendas> venda =  repository.findById(id);
-		if(venda.isPresent()) {
-			return venda.get();
+	public Set<LancamentoVendasMostrarDTO> getVendaById(Long id) {
+		LancamentoVendas venda =  repository.findById(id).orElse(null);
+		if(venda == null) {
+			return repository.findAll().stream()
+					.map(lv -> new LancamentoVendasMostrarDTO(lv.getDataVenda(),lv.getValorVenda(),lv.getVendedor().getNome()))
+					.collect(Collectors.toSet());
+			
 		}else {
 			
 			return null;
@@ -44,14 +61,9 @@ public class LancamentoVendasService {
 			return null;
 		}
 	}
-	public Long deleteVenda(Long id) {
-		if(repository.existsById(id)) {
-			repository.deleteById(id);
-			return id; 
-			
-		}else {
-			return null;
-		}
+	public void deleteVenda(Long id) {
+		LancamentoVendas vendas = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
+		repository.deleteById(id);
 	}
 	
 }

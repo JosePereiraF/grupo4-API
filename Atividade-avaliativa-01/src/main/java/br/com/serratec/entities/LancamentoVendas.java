@@ -26,12 +26,12 @@ public class LancamentoVendas {
 	
 	
 	
-	public LancamentoVendas(Long codigoVenda, LocalDate dataVenda, Double valorVenda, Vendedor vendenddor) {
+	public LancamentoVendas(Long codigoVenda, LocalDate dataVenda, Double valorVenda, Vendedor vendedor) {
 		super();
 		this.codigoVenda = codigoVenda;
 		this.dataVenda = dataVenda;
 		this.valorVenda = valorVenda;
-		this.vendedor = vendenddor;
+		this.vendedor = vendedor;
 	}
 	public LancamentoVendas() {
 		super();
@@ -55,11 +55,11 @@ public class LancamentoVendas {
 	public void setValorVenda(Double valorVenda) {
 		this.valorVenda = valorVenda;
 	}
-	public Vendedor getVendenddor() {
+	public Vendedor getVendedor() {
 		return vendedor;
 	}
-	public void setVendenddor(Vendedor vendenddor) {
-		this.vendedor = vendenddor;
+	public void setVendenddor(Vendedor vendedor) {
+		this.vendedor = vendedor;
 	}
 	
 	
