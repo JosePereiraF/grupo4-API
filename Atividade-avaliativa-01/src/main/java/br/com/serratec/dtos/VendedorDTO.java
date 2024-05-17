@@ -25,6 +25,7 @@ public class VendedorDTO {
         salario = getSalario();
         comissao = getComissao();
     }
+   
     
     public String getNome() {
         return nome;

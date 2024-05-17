@@ -1,13 +1,14 @@
 package br.com.serratec.controller;
 
-import br.com.serratec.dtos.LancamentoVendasMostrarDTO;
 import br.com.serratec.dtos.VendedorDTO;
-import br.com.serratec.entities.LancamentoVendas;
 import br.com.serratec.entities.Vendedor;
-import br.com.serratec.service.LancamentoVendasService;
+import br.com.serratec.repository.VendedorRepository;
 import br.com.serratec.service.VendedorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,19 @@ public class VendedorController {
 	@Autowired
 	private VendedorService vendedorService;
 	
+	private VendedorRepository vendedorRepository;
+	
+//	@GetMapping
+//	public ResponseEntity<List<VendedorDTO>> getAllVendedores(){
+//		return ResponseEntity.ok(vendedorService.getAllVendedores());
+//	}
+	
+	
 	@GetMapping
-	public ResponseEntity<List<VendedorDTO>> getAllVendedores(){
-		return ResponseEntity.ok(vendedorService.getAllVendedores());
+	public ResponseEntity<Page<VendedorDTO>> getAllVendedores(@PageableDefault(size = 10, sort = "nome") Pageable pageable) {
+		return ResponseEntity.ok(vendedorService.getAllVendedores(pageable));
 	}
+	
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Set<VendedorDTO>> getVendedorById(@PathVariable Long id){
