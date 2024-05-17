@@ -22,8 +22,8 @@ public class LancamentoVendas {
 	//Relacionamento: Um vendedor possui um ou vários lançamento de vendas.
 	@ManyToOne
 	@JoinColumn(name = "id_vendedor")
+	@NotNull
 	private Vendedor vendedor;
-	
 	
 	
 	public LancamentoVendas(Long codigoVenda, LocalDate dataVenda, Double valorVenda, Vendedor vendedor) {

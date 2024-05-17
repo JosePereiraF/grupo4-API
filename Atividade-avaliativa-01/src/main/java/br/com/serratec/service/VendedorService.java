@@ -31,7 +31,6 @@ public class VendedorService {
 				.map(vendedor -> new VendedorDTO(vendedor.getNome(), vendedor.getEmail(), vendedor.getSalario(), vendedor.getComissao()));
 	}
 	
-	
 	public Set<VendedorDTO> getVendedorById(Long id) {
 		Vendedor vendedor =  vendedorRepository.findById(id).orElse(null);
 		if(vendedor == null) {

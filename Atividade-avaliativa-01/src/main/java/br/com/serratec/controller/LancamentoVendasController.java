@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.serratec.dtos.LancamentoVendasMostrarDTO;
 import br.com.serratec.entities.LancamentoVendas;
+import br.com.serratec.exceptions.VendedorNotFoundException;
 import br.com.serratec.service.LancamentoVendasService;
 import jakarta.validation.Valid;
 
@@ -34,37 +35,26 @@ public class LancamentoVendasController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Set<LancamentoVendasMostrarDTO>> getVendaById(@PathVariable Long id){
 		Set<LancamentoVendasMostrarDTO> venda = service.getVendaById(id);
-		if(venda != null) {
-			return ResponseEntity.ok(venda);
-		}else {
-			return ResponseEntity.badRequest().build();
-			
-		}
+		return ResponseEntity.ok(venda);
 	}
 	@PostMapping
 	public ResponseEntity<LancamentoVendas> saveVenda(@Valid @RequestBody LancamentoVendas venda){
+		
+		if(venda.getVendedor() != null) throw new VendedorNotFoundException("O vendedor não foi localizado");
 		return ResponseEntity.created(null).body(service.saveVenda(venda));
 	}
 	
 	@PostMapping("/saveAll")
 	public ResponseEntity<List<LancamentoVendas>> saveAll(@Valid @RequestBody List<LancamentoVendas> vendas){
 		vendas = service.saveAll(vendas);
-		if(vendas == null) {
-			return ResponseEntity.notFound().build();
-		}else {
-			return ResponseEntity.ok(vendas);
-			
-		}
+	
+		return ResponseEntity.ok(vendas);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<LancamentoVendas> updateVenda(@PathVariable Long id,@Valid @RequestBody LancamentoVendas venda){
 		venda = service.updateVenda(id, venda);
-		if(venda != null) {
-			return ResponseEntity.ok(venda);
-		}else {
-			return ResponseEntity.badRequest().build();
-		}
+		return ResponseEntity.ok(venda);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletevenda(@PathVariable Long id){
