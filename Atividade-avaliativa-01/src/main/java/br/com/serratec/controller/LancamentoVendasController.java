@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.serratec.dtos.LancamentoVendasMostrarDTO;
 import br.com.serratec.entities.LancamentoVendas;
-import br.com.serratec.exceptions.VendedorNotFoundException;
 import br.com.serratec.service.LancamentoVendasService;
 import jakarta.validation.Valid;
 
@@ -40,7 +39,6 @@ public class LancamentoVendasController {
 	@PostMapping
 	public ResponseEntity<LancamentoVendas> saveVenda(@Valid @RequestBody LancamentoVendas venda){
 		
-		//if(venda.getVendedor() != null) throw new VendedorNotFoundException("O vendedor não foi localizado");
 		return ResponseEntity.created(null).body(service.saveVenda(venda));
 	}
 	
